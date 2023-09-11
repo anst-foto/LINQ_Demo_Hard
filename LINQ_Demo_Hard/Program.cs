@@ -1,31 +1,42 @@
 ﻿using LINQ_Demo_Hard.Model;
 
-var id = Guid.NewGuid();
+var faculties = new List<string> { "SoftDev", "Design" };
 
-var person1 = new Person
+var persons = new List<Person>
 {
-    Guid = id,
-    FirstName = "Andrey",
-    LastName = "Starinin",
-    DateOfBirth = new DateTime(1986, 2, 18)
+    new()
+    {
+        Id = Guid.NewGuid(),
+        FirstName = "Andrey",
+        LastName = "Starinin",
+        DateOfBirth = new DateTime(1986, 2, 18)
+    },
+    new()
+    {
+        Id = Guid.NewGuid(),
+        FirstName = "Dora",
+        LastName = "Starinina",
+        DateOfBirth = new DateTime(2007, 1, 1)
+    }
 };
 
-var person2 = new Person
+var students = new List<Student>
 {
-    Guid = id,
-    FirstName = "Andrey",
-    LastName = "Starinin",
-    DateOfBirth = new DateTime(1986, 2, 18)
+    new()
+    {
+        Id = Guid.NewGuid(),
+        Person = persons.First(p => p is { LastName: "Starinin", FirstName: "Andrey" }),
+        Faculty = faculties.Single(f => f == "SoftDev")
+    },
+    new()
+    {
+        Id = Guid.NewGuid(),
+        Person = persons.First(p => p is { LastName: "Starinina", FirstName: "Dora" }),
+        Faculty = faculties.Single(f => f == "Design")
+    }
 };
 
-//Console.WriteLine($"{person1.Guid}: {person1.LastName} {person1.FirstName}, {person1.DateOfBirth:d}");
-//Console.WriteLine($"{person2.Guid}: {person2.LastName} {person2.FirstName}, {person2.DateOfBirth:d}");
-
-Console.WriteLine(person1);
-Console.WriteLine(person2);
-
-Console.WriteLine(person1.GetHashCode());
-Console.WriteLine(person2.GetHashCode());
-Console.WriteLine(person1 == person2);
-
-Console.WriteLine(person1.Equals(person2));
+foreach (var s in students)
+{
+    Console.WriteLine(s);
+}
